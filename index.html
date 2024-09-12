@@ -8,16 +8,19 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
 
-    <script>
-        console.log(__dirname);
-        console.log(process.env);
-    </script>
-
     <title>Algorithm Visualizer</title>
+
+    <link rel="stylesheet" href="./main.css">
 </head>
 
 <body>
     <h1>Algorithm Visualizer</h1>
+
+    <canvas width="480" height="270"></canvas>
+
+    <p id="info"></p>
 </body>
+
+<script src="./renderer.js"></script>
 
 </html>
