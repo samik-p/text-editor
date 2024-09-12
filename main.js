@@ -1,9 +1,10 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, Tray } = require('electron');
+const { create } = require('node:domain');
+const path = require('node:path');
 
-app.whenReady().then(() => {
 
-    // create a window
-    const myWindow = new BrowserWindow({
+function createWindow() {
+    const win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -11,16 +12,24 @@ app.whenReady().then(() => {
         },
     });
 
-    // load a webpage
-    myWindow.loadFile('index.html');
+    win.loadFile('index.html');
+}
 
-    // add icon into app tray
-    const tray = new Tray('/my-icon');
+app.whenReady().then(() => {
 
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Cool', type: 'radio' },
-    ]);
+    // create a window
+    createWindow();
 
-    tray.setTootTip('Electron');
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow();
+        }
+    });
+
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') {
+            app.quit();
+        }
+    });
 
 });
